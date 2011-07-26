@@ -33,7 +33,7 @@ class SeleniumTestCase(UITestCase):
         Start a test server and tell selenium where to find it.
         """
         self.start_test_server('localhost', 8000)
-        self.selenium = selenium('localhost', 4444, \ 
+        self.selenium = selenium('localhost', 4444,
                                  '*pifirefox', 'http://localhost:8000') 
 
     def tearDown(self):
