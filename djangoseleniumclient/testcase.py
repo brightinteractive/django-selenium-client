@@ -8,7 +8,7 @@ class UITestCase(TestCase):
     TestCase that adds support for starting and stopping a live test server.
     """
 
-    def start_test_server(self, address='localhost', port=8000): 
+    def start_test_server(self, address='localhost', port=8001): 
         """
         Creates a live test server object (instance of WSGIServer).
         """ 
@@ -32,9 +32,9 @@ class SeleniumTestCase(UITestCase):
         """
         Start a test server and tell selenium where to find it.
         """
-        self.start_test_server('localhost', 8000)
+        self.start_test_server('localhost', 8001)
         self.selenium = selenium('localhost', 4444,
-                                 '*pifirefox', 'http://localhost:8000') 
+                                 '*pifirefox', 'http://localhost:8001') 
 
     def tearDown(self):
         """
