@@ -51,8 +51,8 @@ class TestServerThread(threading.Thread):
         try:
             handler = basehttp.AdminMediaHandler(WSGIHandler())
             server_address = (self.address, self.port)
-            httpd = basehttp.StoppableWSGIServer(server_address,
-                                                 basehttp.WSGIRequestHandler)
+            httpd = StoppableWSGIServer(server_address,
+                                        basehttp.WSGIRequestHandler)
             httpd.set_app(handler)
             self.started.set()
         except basehttp.WSGIServerException, e:
