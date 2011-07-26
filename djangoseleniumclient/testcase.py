@@ -9,6 +9,8 @@ TEST_SERVER_PORT = 8001
 
 SELENIUM_HOSTNAME = 'plumpton' 
 SELENIUM_PORT = 4444
+SELENIUM_BROWSER = '*chrome'  # Weirdly, this doesn't actually mean chrome.
+
 
 # See: http://stackoverflow.com/questions/166506/finding-local-ip-addresses-using-pythons-stdlib
 LOCAL_IP_ADDR = socket.gethostbyname(socket.gethostname())
@@ -45,7 +47,8 @@ class SeleniumTestCase(UITestCase):
         """
         self.start_test_server(TEST_SERVER_HOSTNAME, TEST_SERVER_PORT)
         self.selenium = selenium(SELENIUM_HOSTNAME, SELENIUM_PORT,
-                                 '*pifirefox', TEST_SERVER_URL) 
+                                 SELENIUM_BROWSER, TEST_SERVER_URL)
+        self.selenium.start()
 
     def tearDown(self):
         """
