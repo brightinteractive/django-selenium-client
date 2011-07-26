@@ -16,7 +16,7 @@ class StoppableWSGIServer(basehttp.WSGIServer):
         """
         Sets timeout to 1 second.
         """ 
-        super(StoppableWSGIServer, self).server_bind() 
+        basehttp.WSGIServer.server_bind(self) 
         self.socket.settimeout(1) 
  
     def get_request(self): 
