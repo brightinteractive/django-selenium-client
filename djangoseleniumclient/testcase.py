@@ -1,6 +1,6 @@
 from django.test import TestCase
 from testserver import TestServerThread
-
+from selenium import selenium
 
 
 class UITestCase(TestCase):
