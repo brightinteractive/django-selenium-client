@@ -1,8 +1,10 @@
 from django.test import TestCase
-from testserver import TestServerThread
-from selenium import selenium
+from .testserver import TestServerThread
+from .selenium import selenium
 import socket
 
+
+# TODO: Grok these from settings files, and just use these as defaults
 
 TEST_SERVER_HOSTNAME = '0.0.0.0'   # Network-visible, unlike 127.0.0.1
 TEST_SERVER_PORT = 8001
