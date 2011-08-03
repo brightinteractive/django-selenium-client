@@ -55,7 +55,6 @@ class TestServerThread(threading.Thread):
                                         basehttp.WSGIRequestHandler)
             httpd.set_app(handler)
             self.started.set()
-            print 'started'
         except basehttp.WSGIServerException, e:
             self.error = e
             self.started.set()
