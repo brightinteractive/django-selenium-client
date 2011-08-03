@@ -11,13 +11,28 @@ Small modification was made in testserver.py
 Slightly tweaked TestServerThread to get database settings since the settings
 as they were have since been deprecated.
 
+Installation
+------------
+
+Follow the GitHub setup instructions.
+
+Install using pip::
+
+    pip install git+ssh://git@github.com/brightinteractive/django-selenium-client.git
+
+
 Usage
 -----
 
-from django_selenium_client import SeleniumTestCase
+In your app's ``tests.py`` file::
 
-TODO:
+    from django_selenium_client import SeleniumTestCase
 
-1. Doc import'ing this
-2. Doc usage more throughly
-3. Get selenium settings from settings.py
+    class ExampleTests(SeleniumTestCase):
+        def test_example(self):
+            self.selenium.open('/example')
+
+TODO
+----
+
+Get selenium settings from settings.py
