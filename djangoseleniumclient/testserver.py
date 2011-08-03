@@ -55,6 +55,7 @@ class TestServerThread(threading.Thread):
                                         basehttp.WSGIRequestHandler)
             httpd.set_app(handler)
             self.started.set()
+            print 'started'
         except basehttp.WSGIServerException, e:
             self.error = e
             self.started.set()
@@ -62,9 +63,11 @@ class TestServerThread(threading.Thread):
 
         # Must do database stuff in this new thread if database in memory.
         from django.conf import settings
-        if ( settings.DATABASE_ENGINE == 'sqlite3' and
-            (not settings.TEST_DATABASE_NAME
-             or settings.TEST_DATABASE_NAME == ':memory:') ):
+        database = settings.DATABASES['default']
+
+        if ( database.get('ENGINE', None).split('.')[-1] == 'sqlite3' and
+            (not database.get('TEST_NAME', None)
+             or database.get('TEST_NAME') == ':memory:') ):
             from django.db import connection
             db_name = connection.creation.create_test_db(0)
             # Import the fixture data into the test database.
