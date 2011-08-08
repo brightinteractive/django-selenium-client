@@ -47,6 +47,7 @@ class SeleniumTestCase(UITestCase):
         """
         Start a test server and tell selenium where to find it.
         """
+        self.TEST_SERVER_URL = TEST_SERVER_URL
         self.start_test_server(TEST_SERVER_HOSTNAME, TEST_SERVER_PORT)
         self.selenium = selenium(SELENIUM_HOSTNAME, SELENIUM_PORT,
                                  SELENIUM_BROWSER, TEST_SERVER_URL)
