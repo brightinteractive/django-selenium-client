@@ -24,6 +24,16 @@ Install using pip::
 Usage
 -----
 
+In ``settings.py``::
+
+    TEST_SERVER_HOSTNAME = '0.0.0.0'   # Network-visible, unlike 127.0.0.1
+    TEST_SERVER_PORT = 8001
+    
+    SELENIUM_HOSTNAME = 'plumpton' 
+    SELENIUM_PORT = 4444
+    SELENIUM_BROWSER = '*chrome'  # Weirdly, this doesn't actually mean chrome.
+
+
 In your app's ``tests.py`` file::
 
     from django_selenium_client import SeleniumTestCase
