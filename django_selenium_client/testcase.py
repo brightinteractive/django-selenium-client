@@ -38,7 +38,14 @@ class SeleniumTestCase(UITestCase):
         """
         Start a test server and tell selenium where to find it.
         """
-        hostname = socket.gethostbyname(socket.gethostname())
+        # Usually socket.gethostbyname(socket.gethostname()) will return an
+        # IP address of the machine that it is run on, but sometimes it
+        # doesn't work (e.g. if the machine is not connected to a network),
+        # therefore we support an optional HOSTNAME_AS_SEEN_BY_SELENIUM
+        # setting.
+        hostname = getattr(settings, 'HOSTNAME_AS_SEEN_BY_SELENIUM', None)
+        if hostname is None:
+            hostname = socket.gethostbyname(socket.gethostname())
         self.TEST_SERVER_URL = 'http://%s:%d' % (hostname,
                                                  settings.TEST_SERVER_PORT)
 
