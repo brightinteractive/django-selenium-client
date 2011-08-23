@@ -1,15 +1,19 @@
 import socket
 
 from django.conf import settings
-from django.test import TestCase
+from django.test import TestCase, TransactionTestCase
 
 from .testserver import TestServerThread
 from .selenium import selenium
 
 
-class UITestCase(TestCase):
+class UITestCaseMixin(object):
     """
-    TestCase that adds support for starting and stopping a live test server.
+    Adds support to TestCase or TransactionTestCase for starting and stopping
+    a live test server.
+
+    Concrete subclasses should also subclass django.test.TestCase or
+    django.test.TransactionTestCase.
     """
 
     def start_test_server(self,
@@ -33,8 +37,16 @@ class UITestCase(TestCase):
             self.server_thread.join()
 
 
-class SeleniumTestCase(UITestCase):
-    def setUp(self): 
+class SeleniumTestCaseMixin(UITestCaseMixin):
+    """
+    Adds support to TestCase or TransactionTestCase for automatically
+    starting and stopping a live test server.
+
+    Concrete subclasses should also subclass django.test.TestCase or
+    django.test.TransactionTestCase.
+    """
+
+    def setUp(self):
         """
         Start a test server and tell selenium where to find it.
         """
@@ -63,3 +75,11 @@ class SeleniumTestCase(UITestCase):
         """
         self.selenium.stop()
         self.stop_test_server()
+
+
+class SeleniumTestCase(SeleniumTestCaseMixin, TestCase):
+    pass
+
+
+class TransactionSeleniumTestCase(SeleniumTestCaseMixin, TransactionTestCase):
+    pass
