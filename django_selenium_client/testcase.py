@@ -34,7 +34,8 @@ class UITestCase(TestCase):
 
 
 class SeleniumTestCase(UITestCase):
-    def setUp(self): 
+    @classmethod
+    def setUpClass(cls):
         """
         Start a test server and tell selenium where to find it.
         """
@@ -46,20 +47,25 @@ class SeleniumTestCase(UITestCase):
         hostname = getattr(settings, 'HOSTNAME_AS_SEEN_BY_SELENIUM', None)
         if hostname is None:
             hostname = socket.gethostbyname(socket.gethostname())
-        self.TEST_SERVER_URL = 'http://%s:%d' % (hostname,
-                                                 settings.TEST_SERVER_PORT)
+        cls.TEST_SERVER_URL = 'http://%s:%d' % \
+            (hostname, settings.TEST_SERVER_PORT)
 
-        self.start_test_server(settings.TEST_SERVER_HOSTNAME,
-                               settings.TEST_SERVER_PORT)
-        self.selenium = selenium(settings.SELENIUM_HOSTNAME,
-                                 settings.SELENIUM_PORT,
-                                 settings.SELENIUM_BROWSER,
-                                 self.TEST_SERVER_URL)
-        self.selenium.start()
+        cls.selenium = selenium(settings.SELENIUM_HOSTNAME,
+                                settings.SELENIUM_PORT,
+                                settings.SELENIUM_BROWSER,
+                                cls.TEST_SERVER_URL)
+        cls.selenium.start()
 
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(cls):
         """
         Stop server and Selenium.
         """
-        self.selenium.stop()
+        cls.selenium.stop()
+
+    def setUp(self):
+        self.start_test_server(settings.TEST_SERVER_HOSTNAME,
+                               settings.TEST_SERVER_PORT)
+
+    def tearDown(self):
         self.stop_test_server()
